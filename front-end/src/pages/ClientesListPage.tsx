@@ -14,6 +14,20 @@ export function ClientesListPage() {
     return <p>Erro ao carregar clientes.</p>;
   }
 
+  async function handleDelete(id: string | number, nomeCliente: string) {
+    const confirmed = window.confirm(
+      `Tem certeza de que deseja apagar o cliente "${nomeCliente}"?`
+    );
+    if (!confirmed) return;
+
+    try {
+      await deleteCliente(id).unwrap();
+    } catch (error) {
+      console.error('Erro ao apagar cliente:', error);
+      alert('Erro ao apagar cliente.');
+    }
+  }
+
   return (
     <div>
       <div>
@@ -34,10 +48,10 @@ export function ClientesListPage() {
         <tbody>
           {clientes.map((cliente) => (
             <tr key={cliente.id}>
-              <td>{cliente.nomeCliente}</td>
-              <td>{cliente.telefone}</td>
-              <td>{cliente.cidade ?? '-'}</td>
-              <td>{cliente.bairro ?? '-'}</td>
+              <td>{cliente.nomeCliente || '-'}</td>
+              <td>{cliente.telefone?.trim() || '-'}</td>
+              <td>{cliente.cidade?.trim() || '-'}</td>
+              <td>{cliente.bairro?.trim() || '-'}</td>
               <td>
                 <Link to={AppRoutes.CLIENTS_EDIT.replace(':id', String(cliente.id))}>
                   Editar
@@ -45,7 +59,7 @@ export function ClientesListPage() {
                 <button
                   type="button"
                   disabled={isDeleting}
-                  onClick={() => deleteCliente(cliente.id)}
+                  onClick={() => handleDelete(cliente.id, cliente.nomeCliente)}
                 >
                   Apagar
                 </button>

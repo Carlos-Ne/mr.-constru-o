@@ -1,0 +1,182 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #f8fafc;
+  color: #0f172a;
+  line-height: 1.5;
+}
+
+/* Cabeçalho da página e botão de criar */
+h2 {
+  margin: 0 0 16px;
+  font-size: 1.5rem;
+  color: #0f172a;
+}
+
+div > div:has(> h2) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+/* Links usados como botões de ação */
+a {
+  color: #1e293b;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+div > div:has(> h2) > a {
+  display: inline-block;
+  padding: 8px 14px;
+  background-color: #0f172a;
+  color: #ffffff;
+  border-radius: 6px;
+  font-size: 0.92rem;
+}
+
+div > div:has(> h2) > a:hover {
+  background-color: #1e293b;
+  text-decoration: none;
+}
+
+/* Tabelas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+th,
+td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: middle;
+}
+
+th {
+  background-color: #f1f5f9;
+  color: #334155;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Coluna de ações (Editar e Apagar) */
+td:last-child {
+  white-space: nowrap;
+}
+
+td:last-child a {
+  display: inline-block;
+  padding: 5px 10px;
+  margin-right: 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #0f172a;
+  font-size: 0.85rem;
+}
+
+td:last-child a:hover {
+  background-color: #f1f5f9;
+  text-decoration: none;
+}
+
+button {
+  padding: 6px 12px;
+  border: 1px solid #fecaca;
+  border-radius: 5px;
+  background-color: #fef2f2;
+  color: #b91c1c;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background-color: #fee2e2;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Formulários */
+form {
+  max-width: 520px;
+  background-color: #ffffff;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #0f172a;
+  background-color: #ffffff;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #0f172a;
+  outline-offset: 1px;
+}
+
+form button[type="submit"] {
+  align-self: flex-start;
+  background-color: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+  padding: 9px 16px;
+}
+
+form button[type="submit"]:hover:not(:disabled) {
+  background-color: #1e293b;
+}

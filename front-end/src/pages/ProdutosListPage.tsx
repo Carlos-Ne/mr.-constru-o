@@ -2,15 +2,35 @@ import { Link } from 'react-router-dom';
 import { AppRoutes } from '../routes/paths';
 import { useGetProdutosQuery, useDeleteProdutoMutation } from '../services/api';
 
+const formatCurrency = new Intl.NumberFormat('pt-BR', {
+  style: 'currency',
+  currency: 'BRL',
+});
+
 export function ProdutosListPage() {
   const { data: produtos = [], isLoading, isError } = useGetProdutosQuery();
   const [deleteProduto, { isLoading: isDeleting }] = useDeleteProdutoMutation();
-if (isLoading) {
+
+  if (isLoading) {
     return <p>A carregar produtos...</p>;
   }
 
   if (isError) {
     return <p>Erro ao carregar produtos.</p>;
+  }
+
+  async function handleDelete(id: string | number, nomeProduto: string) {
+    const confirmed = window.confirm(
+      `Tem certeza de que deseja apagar o produto "${nomeProduto}"?`
+    );
+    if (!confirmed) return;
+
+    try {
+      await deleteProduto(id).unwrap();
+    } catch (error) {
+      console.error('Erro ao apagar produto:', error);
+      alert('Erro ao apagar produto.');
+    }
   }
 
   return (
@@ -34,11 +54,11 @@ if (isLoading) {
         <tbody>
           {produtos.map((produto) => (
             <tr key={produto.id}>
-              <td>{produto.codigo}</td>
-              <td>{produto.nomeProduto}</td>
-              <td>{produto.marca}</td>
-              <td>{produto.precoVenda}</td>
-              <td>{produto.estoqueAtual}</td>
+              <td>{produto.codigo || '-'}</td>
+              <td>{produto.nomeProduto || '-'}</td>
+              <td>{produto.marca?.trim() || '-'}</td>
+              <td>{formatCurrency.format(Number(produto.precoVenda) || 0)}</td>
+              <td>{produto.estoqueAtual ?? '-'}</td>
               <td>
                 <Link to={AppRoutes.PRODUCTS_EDIT.replace(':id', String(produto.id))}>
                   Editar
@@ -46,7 +66,7 @@ if (isLoading) {
                 <button
                   type="button"
                   disabled={isDeleting}
-                  onClick={() => deleteProduto(produto.id)}
+                  onClick={() => handleDelete(produto.id, produto.nomeProduto)}
                 >
                   Apagar
                 </button>
